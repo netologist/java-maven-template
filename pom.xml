@@ -27,6 +27,8 @@
         <assertj.version>3.27.7</assertj.version>
         <errorprone.version>2.50.0</errorprone.version>
         <archunit.version>1.5.0</archunit.version>
+        <wiremock.version>3.12.1</wiremock.version>
+        <awaitility.version>4.3.0</awaitility.version>
     </properties>
 
     <dependencies>
@@ -43,6 +45,22 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- WireMock -->
+        <dependency>
+            <groupId>org.wiremock</groupId>
+            <artifactId>wiremock-standalone</artifactId>
+            <version>${wiremock.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Awaitility -->
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- Error Prone -->
@@ -116,9 +134,21 @@
                 <version>3.14.1</version>
                 <configuration>
                     <release>${maven.compiler.release}</release>
-
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.google.errorprone</groupId>
+                            <artifactId>error_prone_core</artifactId>
+                            <version>${errorprone.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                     <compilerArgs>
                         <arg>-Xlint:all</arg>
+                        <arg>-Xlint:-processing</arg>
                         <arg>-Werror</arg>
                         <!-- error prone -->
                         <arg>-XDcompilePolicy=simple</arg>
